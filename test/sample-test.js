@@ -109,6 +109,11 @@ describe("Foo", function () {
       "foo3 initial balance dfxCAD  " +
         (await dfxCAD.connect(user).balanceOf(foo3Address))
     );
+    //foo3 balance cadc
+    console.log(
+      "foo3 initial balance cadc  " +
+        (await cadc.connect(user).balanceOf(foo3Address))
+    );
     //
     //
     //
@@ -134,6 +139,11 @@ describe("Foo", function () {
       "foo3 final balance dfxCAD  " +
         (await dfxCAD.connect(user).balanceOf(foo3Address))
     );
+    //
+    console.log(
+      "foo3 final balance cadc  " +
+        (await cadc.connect(user).balanceOf(foo3Address))
+    );
     //diff dfx
     console.log("diff DFX " + (await foo3.connect(user).diffDFX()));
     //diffcadc
@@ -151,9 +161,10 @@ describe("Foo", function () {
     );
     //
     //
+    //
     //Check staked balance
     const balance2 = await foo3.connect(user).balanceAt();
-    const balance3 = balance2 - balance;
+    const balance3 = balance2;
 
     console.log(
       "test foo3 balance staked after calling foo3 combined call " + balance3

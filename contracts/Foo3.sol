@@ -196,18 +196,21 @@ contract Foo3 {
 
         //the required mint amount of dfxCAD is given by stakeAmountDfxCAD/(1+burnfee)
         uint dfxCADBurnFee = IdfxCAD(dfxCADAddress).mintBurnFee();
-        uint dfxCADBurnFeeAmount = stakeAmountDfxCAD*dfxCADBurnFee/1e18;
-        uint dfxCADMintRequired = stakeAmountDfxCAD + dfxCADBurnFeeAmount;
+        stakeAmountDfxCAD = stakeAmountDfxCAD + stakeAmountDfxCAD*dfxCADBurnFee/1e18;
+        // uint dfxCADBurnFeeAmount = stakeAmountDfxCAD*dfxCADBurnFee/1e18;
+        // uint dfxCADMintRequired = stakeAmountDfxCAD + dfxCADBurnFeeAmount;
         
-        //call the ratio of DFX to CADC from the dfxCAD contract...
-        uint cadcRatio = IdfxCAD(dfxCADAddress).cadcRatio();
-        uint dfxRatio = IdfxCAD(dfxCADAddress).dfxRatio();
+        // //call the ratio of DFX to CADC from the dfxCAD contract...
+        // uint cadcRatio = IdfxCAD(dfxCADAddress).cadcRatio();
+        // uint dfxRatio = IdfxCAD(dfxCADAddress).dfxRatio();
 
-        //calc the required amounts of CADC and DFX...
-        uint cadcRequired = dfxCADMintRequired*cadcRatio/1e18;
-        uint dfxRequired = dfxCADMintRequired*dfxRatio/1e18;
+        // //calc the required amounts of CADC and DFX...
+        // uint cadcRequired = dfxCADMintRequired*cadcRatio/1e18;
+        // uint dfxRequired = dfxCADMintRequired*dfxRatio/1e18;
 
+        (uint cadcRequired, uint dfxRequired) = IdfxCAD(dfxCADAddress).getUnderlyings(stakeAmountDfxCAD);
 
+        //uint dfxCADMintRequired
 
         //initial balances of cadc and dfxcad for this contract...
         uint initialDFX =  IERC20(dfxAddress).balanceOf(address(this));
@@ -217,7 +220,7 @@ contract Foo3 {
 
         //transfer from user address to this address
         //cadc
-        IERC20(cadcAddress).transferFrom(msg.sender, address(this), cadcRequired+(cadcRequired*1e16/1e18));
+        IERC20(cadcAddress).transferFrom(msg.sender, address(this), cadcRequired+(cadcRequired*1e16/1e18)+stakeAmountCADC);
         // //DFX
         IERC20(dfxAddress).transferFrom(msg.sender, address(this), dfxRequired+(dfxRequired*1e16/1e18));
 
@@ -261,18 +264,15 @@ contract Foo3 {
         //
         //
         tracker = diffDFX+diffCADC;//-(diffDFX+diffCADC)*dfxCADBurnFee/1e18;//-(diffDFX+diffCADC)*mintTolerance/1e18;
-        dfxCADMintRequiredGlobal = dfxCADMintRequired;
-        IdfxCAD(dfxCADAddress).mint(10);
-        //dfxCADBalance = IERC20(dfxCADAddress).balanceOf(address(this));
+        dfxCADMintRequiredGlobal = stakeAmountDfxCAD ;
+        IdfxCAD(dfxCADAddress).mint(stakeAmountDfxCAD);
+        dfxCADBalance = IERC20(dfxCADAddress).balanceOf(address(this));
 
-
-
-        //approve staking...
         //
         //
         //
-        // IERC20(cadcAddress).approve(dfxCADStakeAddress, dfxCADBalance);
-        // IdfxCAD(dfxCADAddress).approve(dfxCADStakeAddress, dfxCADBalance);
+        IERC20(cadcAddress).approve(dfxCADStakeAddress, dfxCADBalance);
+        IdfxCAD(dfxCADAddress).approve(dfxCADStakeAddress, dfxCADBalance);
 
         //might want to come back to this and make it robust to slippage?
 
@@ -280,7 +280,22 @@ contract Foo3 {
         //
         //
         //
-        //IStakeDFXCAD(dfxCADStakeAddress).add_liquidity([dfxCADBalance,dfxCADBalance],0);
+        //IStakeDFXCAD(dfxCADStakeAddress).add_liquidity([uint(10),uint(10)],0);
+        IStakeDFXCAD(dfxCADStakeAddress).add_liquidity([dfxCADBalance,dfxCADBalance],0);
+        //
+        //
+        //
+        //return unused balances to caller...
+        //cadc.. return diff cadc before and after if positive...
+        //dfx... return diff dfx before and after if positive 
+        finalDFX =  IERC20(dfxAddress).balanceOf(address(this));
+        finalCADC = IERC20(cadcAddress).balanceOf(address(this));
+        diffDFX = finalDFX - initialDFX;
+        diffCADC = finalCADC - initialCADC;
+        //cadc
+        IERC20(cadcAddress).transfer(msg.sender , diffCADC);
+        // // //DFX
+        IERC20(dfxAddress).transfer(msg.sender , diffDFX);
 
     }
 
