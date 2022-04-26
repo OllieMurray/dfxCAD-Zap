@@ -10,7 +10,7 @@ This repo contains my submission for the DFX Hackathon.  It is a zapper contract
 8. Stake CADC and dfxCAD in staking contract by calling stakingContract.add_liquidity 
 
 
-There is one test that demonstrates a range of functionality, but is primarily focused on the stakeOnCurve method in 'foo.3' (i.e. the Zapper contract).  The general steps followed in the test are:
+There is one test (sample-test.js) that demonstrates a range of functionality, but is primarily focused on the stakeOnCurve method in 'foo.3' (i.e. the Zapper contract).  The general steps followed in the test are:
 1. Mint user a bunch of CADC and DFX
 2. Approve CADC and DFX for transfers from user to Zapper (foo3)
 3. Check balances of user and Zapper (foo3) before and after zap (method = stakeOnCurve)
