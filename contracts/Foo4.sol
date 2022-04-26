@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
@@ -183,7 +184,7 @@ contract Foo4 {
     }
 
 
-    function stakeOnCurve(uint _stakeAmount) public returns (uint) {
+    function stakeOnCurve(uint _stakeAmount) public {
         //determine relative amounts of staking tokens
         //staking currently requires 50/50 ratios...
         //future versions of zap could call a function in staking contract to determine ratios
@@ -300,7 +301,7 @@ contract Foo4 {
     }
 
 
-     function stakeOnCurveWorking(uint _stakeAmount) public returns (uint) {
+     function stakeOnCurveWorking(uint _stakeAmount) public {
         //determine relative amounts of staking tokens
         //staking currently requires 50/50 ratios...
         //future versions of zap could call a function in staking contract to determine ratios
