@@ -18,14 +18,15 @@ There is one test that demonstrates a range of functionality, but is primarily f
 5. Verify Staked Amount
 6. Check balances of user and Zapper (foo3) after staking
 
-Some final helper steps are also performed: (see spreadsheet for details)
-    To reconcile with steps 1-6
-7. grab mintBurnFee
-8. call getUnderlyings on fixed amount of dfxCAD 
+Some final helper steps are also performed: (see spreadsheet for details).  These are used to check steps 1-6:
 
-    To show usage clarification of mintBurnFee (see spreadsheet for details)
-9. call getUnderlying on 1000 dfxCAD
-10. Mint 1000 dfxCAD
+7.  grab mintBurnFee
+8.  call getUnderlyings on fixed amount of dfxCAD 
+
+To show usage clarification of mintBurnFee (see spreadsheet for details):
+
+9.  call getUnderlying on 1000 dfxCAD
+10.  Mint 1000 dfxCAD
 
 
 Try running the test (it is pinned to a block number and therefore should be deterministic):
