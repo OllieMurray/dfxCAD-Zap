@@ -38,7 +38,7 @@ To show usage clarification of mintBurnFee (see spreadsheet for details):
 10.  Mint 1000 dfxCAD
 
 
-Try running the test (it is pinned to a block number and therefore should be deterministic):
+To run deterministic tests:
 
 ```shell
 yarn test
@@ -46,7 +46,7 @@ yarn test
 
 # Files to Ignore In Submission
 
-Files to Ignore Foo.sol, Foo2.sol, and Foo4.sol.  These solidity files were generated during the testing and development process and may not be in a functioning state and do not reflect good coding practices or event proper flow logic.  I have left them in the project for future reference as there are useful code snippets in there.  There are some useful helper functions in there that could be used in future work.
+Files to Ignore Foo.sol, Foo2.sol, and Foo4.sol.  These solidity files were generated during the testing and development process and may not be in a functioning state and do not reflect good coding practices or even proper flow logic.  I have left them in the project for future reference as there are useful code snippets in there.  There are some useful helper functions in there that could be used in future work.
 
 
 # Environment Variables
