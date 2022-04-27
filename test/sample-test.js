@@ -53,7 +53,7 @@ describe("Zapper", function () {
     const DFXAddress = "0x888888435FDe8e7d4c54cAb67f206e4199454c60"; // DFX
     const DFX = new ethers.Contract(DFXAddress, DFXABI, ownerDFX);
     //Mint an abundance of CADC to user account
-    //Fee Internet Money!>!>!>!
+    //Free Internet Money!>!>!>!
     const amountDFX = ethers.utils.parseUnits("100000", 18);
     await DFX.connect(ownerDFX).approve(userAddress, amountDFX);
     await DFX.connect(ownerDFX).mint(userAddress, amountDFX);
@@ -117,7 +117,7 @@ describe("Zapper", function () {
     const cadcAddress = "0xcaDC0acd4B445166f12d2C07EAc6E2544FbE2Eef"; // CADC
     const cadc = new ethers.Contract(cadcAddress, FiatTokenV2ABI, ownerCADC);
     //Mint an abundance of CADC to user account
-    //Fee Internet Money!>!>!>!
+    //Free Internet Money!>!>!>!
     await cadc.updateMasterMinter(userAddress);
     const amountCADCstart = ethers.utils.parseUnits("100000", 18);
     await cadc.connect(user).configureMinter(userAddress, amountCADCstart);
